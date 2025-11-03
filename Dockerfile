@@ -1,7 +1,13 @@
 # ✅ Use official n8n image
 FROM n8nio/n8n:latest
 
-# ✅ Set working directory (important for PATH resolution)
+# ✅ Switch to root to adjust permissions and path
+USER root
+
+# ✅ Ensure n8n binary is executable and available globally
+RUN ln -sf /usr/local/lib/node_modules/n8n/bin/n8n /usr/local/bin/n8n
+
+# ✅ Set working directory
 WORKDIR /home/node
 
 # ✅ Expose Render’s dynamic port
@@ -19,8 +25,8 @@ ENV N8N_BASIC_AUTH_ACTIVE=true
 ENV N8N_BASIC_AUTH_USER=admin
 ENV N8N_BASIC_AUTH_PASSWORD=yourpassword
 
-# ✅ Ensure n8n binary is in PATH
-ENV PATH="/home/node/.n8n/node_modules/.bin:${PATH}"
+# ✅ Switch back to node user (best practice)
+USER node
 
 # ✅ Start n8n
 CMD ["n8n", "start"]
