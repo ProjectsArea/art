@@ -1,16 +1,19 @@
 services:
   - type: web
-    name: n8n-dashboard
+    name: n8n-service
     env: docker
     plan: free
     autoDeploy: true
     envVars:
-      - key: N8N_RUNNERS_ENABLED
-        value: "true"
+      - key: N8N_ENCRYPTION_KEY
+        value: your-secure-random-key
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: yourpassword
       - key: N8N_BLOCK_ENV_ACCESS_IN_NODE
-        value: "false"
+        value: false
       - key: N8N_GIT_NODE_DISABLE_BARE_REPOS
-        value: "true"
-      - key: N8N_PORT
-        value: "5678"
-    dockerfilePath: ./Dockerfile
+        value: true
